@@ -2,17 +2,18 @@ const connection = require('./kafka/connection');
 
 // topics files
 // var signin = require('./services/signin.js');
-const userAuth = require('./services/userAuth');
+const account = require('./services/account');
 const passport = require('./services/passport');
-const userProfile = require('./services/userProfile');
+const users = require('./services/users');
+const images = require('./services/images');
+const groups = require('./services/groups');
 
 require('./db/mongoose');
 
 function handleTopicRequest(topicName, fname) {
-  // var topicName = 'root_topic';
   const consumer = connection.getConsumer(topicName);
   const producer = connection.getProducer();
-  console.log('server is running ');
+  console.log(`server is running for ${topicName} topic`);
   consumer.on('message', (message) => {
     console.log(`message received for ${topicName} `, fname);
     console.log(JSON.stringify(message.value));
@@ -43,6 +44,8 @@ function handleTopicRequest(topicName, fname) {
 // Add your TOPICs here
 // first argument is topic name
 // second argument is a function that will handle this topic request
-handleTopicRequest('userAuth', userAuth);
+handleTopicRequest('account', account);
 handleTopicRequest('passport', passport);
-handleTopicRequest('userProfile', userProfile);
+handleTopicRequest('users', users);
+handleTopicRequest('images', images);
+handleTopicRequest('groups', groups);

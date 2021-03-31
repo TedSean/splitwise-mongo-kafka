@@ -7,7 +7,7 @@ const kafka = require('../kafka/client');
 
 router.post('/', async (req, res) => {
   req.body.path = 'user-signup';
-  kafka.makeRequest('userAuth', req.body, (err, results) => {
+  kafka.makeRequest('account', req.body, (err, results) => {
     if (err) {
       console.log('Inside err');
       res.json({

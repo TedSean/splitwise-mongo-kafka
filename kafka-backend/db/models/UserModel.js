@@ -17,7 +17,6 @@ const usersSchema = new Schema({
   },
   phone: {
     type: String,
-    // required: true,
   },
   language: {
     type: String,
@@ -39,6 +38,8 @@ const usersSchema = new Schema({
     default: 'userPlaceholder.png',
     required: true,
   },
+  invitations: [Schema.Types.ObjectId],
+  memberships: [Schema.Types.ObjectId],
 },
 {
   versionKey: false,

@@ -1,10 +1,11 @@
 const app = require('./app');
 
-// const ping = require('./routes/ping');
-const userLogin = require('./routes/userLogin');
-const userSignUp = require('./routes/userSignUp');
-const profileUpdate = require('./routes/profileUpdate');
-// const upload = require('./routes/upload');
+const ping = require('./routes/ping');
+const login = require('./routes/login');
+const signup = require('./routes/signup');
+const profile = require('./routes/profile');
+const images = require('./routes/images');
+const groups = require('./routes/groups');
 // const createGroup = require('./routes/groups/createGroup');
 // const inviteMember = require('./routes/groups/inviteMember');
 // const leavegroup = require('./routes/groups/leavegroup');
@@ -17,11 +18,12 @@ const profileUpdate = require('./routes/profileUpdate');
 // const groupdetails = require('./routes/groups/groupdetails');
 // const allnames = require('./routes/allnames');
 
-// app.use('/api/ping', ping);
-app.use('/api/userLogin', userLogin);
-app.use('/api/userSignUp', userSignUp);
-app.use('/api/profileUpdate', profileUpdate);
-// app.use('/api/upload', upload);
+app.use('/api/ping', ping);
+app.use('/api/login', login);
+app.use('/api/signup', signup);
+app.use('/api/profile', profile);
+app.use('/api/images', images);
+app.use('/api/groups', groups);
 // app.use('/api/createGroup', createGroup);
 // app.use('/api/inviteMember', inviteMember);
 // app.use('/api/leavegroup', leavegroup);

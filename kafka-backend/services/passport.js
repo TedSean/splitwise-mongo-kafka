@@ -4,9 +4,9 @@ const passportHandler = async (msg, callback) => {
   const res = {};
   try {
     const { userId } = msg;
-    console.log(`User Id : ${userId}`);
+    // console.log(`User Id : ${userId}`);
     const user = await User.findById(userId);
-    console.log(`User: ${user}`);
+    // console.log(`User: ${user}`);
     if (!user) {
       res.status = 404;
       callback(null, res);
@@ -22,9 +22,6 @@ const passportHandler = async (msg, callback) => {
 };
 
 function handleRequest(msg, callback) {
-  // if (msg.path === 'passport') {
-  //   delete msg.path;
   passportHandler(msg, callback);
-  // }
 }
 exports.handleRequest = handleRequest;

@@ -11,20 +11,20 @@ auth();
 
 router.post('/', async (request, response) => {
   request.body.path = 'user-login';
-  kafka.makeRequest('userAuth', request.body, (err, results) => {
+  kafka.makeRequest('account', request.body, (err, results) => {
     if (err) {
-      console.log('Inside err');
+      // console.log('Inside err');
       response.json({
         status: 'error',
-        msg: 'System Error, Try Again.',
+        msg: err,
       });
     } else if (results.status === 404) {
       return response.status(201).json({ errors: [{ msg: 'Invalid Credentials' }] });
     } else {
       const data = JSON.parse(results.data);
-      console.log(`Id: ${data._id}`);
+      // console.log(`Id: ${data._id}`);
       const token = jwt.sign({
-        _id: data._id,
+        id: data._id,
       },
       config.secret,
       {

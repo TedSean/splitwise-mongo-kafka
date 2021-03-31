@@ -1,4 +1,5 @@
 # splitwise-mongo-kafka
+
 Splitwise Clone using Mongo, Express, React and Node.
 
 - [x] Kafka  
@@ -7,8 +8,9 @@ Splitwise Clone using Mongo, Express, React and Node.
 - [x] User Login  
 - [x] Profile Get  
 - [x] Profile Update  
-- [ ] Image Upload  
+- [x] User Image Upload  
 - [ ] Group Create  
+- [ ] Group Image Upload  
 - [ ] Group List  
 - [ ] Group Invite  
 - [ ] Group Reject  
