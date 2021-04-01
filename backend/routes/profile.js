@@ -5,7 +5,7 @@ const kafka = require('../kafka/client');
 
 const router = express.Router();
 
-router.get('/:email', checkAuth, (req, res) => {
+router.get('/', checkAuth, (req, res) => {
   // console.log('Inside Profile Get Request');
   // console.log(req);
   const token = req.headers.authorization;

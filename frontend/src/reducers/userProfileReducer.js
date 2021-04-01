@@ -1,5 +1,4 @@
-/* eslint-disable import/no-anonymous-default-export */
-import { GET_USER, UPDATE_USER } from '../actions/constantTypes';
+import { GET_USER, UPDATE_USER } from '../actions/constant-types';
 
 const initState = {
   user: {},

@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_LOGOUT } from '../actions/constantTypes';
+import { USER_LOGIN, USER_LOGOUT } from '../actions/constant-types';
 
 const initState = {
   user: {},

@@ -2,6 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const AWS = require('aws-sdk');
+const path = require('path');
+const fs = require('fs');
 const config = require('../utils/config');
 const kafka = require('../kafka/client');
 const { checkAuth } = require('../utils/passport');
@@ -40,6 +42,18 @@ const groupImageUpload = multer({
     },
   }),
 }).single('groupImage');
+
+router.get('/:userImage', (req, res) => {
+  console.log('Inside user image GET request');
+  // console.log('Req Body : ', req.body);
+  const image = `${path.join(__dirname, '..')}/public/storage/users/${req.params.userImage}`;
+
+  if (fs.existsSync(image)) {
+    res.sendFile(image);
+  } else {
+    res.sendFile(`${path.join(__dirname, '..')}/public/storage/users/userPlaceholder.png`);
+  }
+});
 
 router.put(
   '/user/:userId',

@@ -9,17 +9,25 @@ const router = express.Router();
 
 auth();
 
-router.post('/', async (request, response) => {
-  request.body.path = 'user-login';
-  kafka.makeRequest('account', request.body, (err, results) => {
+router.post('/', async (req, res) => {
+  req.body.path = 'user-login';
+  kafka.makeRequest('account', req.body, (err, results) => {
     if (err) {
       // console.log('Inside err');
-      response.json({
+      res.json({
         status: 'error',
         msg: err,
       });
-    } else if (results.status === 404) {
-      return response.status(201).json({ errors: [{ msg: 'Invalid Credentials' }] });
+    } else if (results.status === 400) {
+      res.writeHead(results.status, {
+        'Content-Type': 'application/json',
+      });
+      res.end(JSON.stringify({ message: 'USER_DOES_NOT_EXIST' }));
+    } else if (results.status === 403) {
+      res.writeHead(results.status, {
+        'Content-Type': 'application/json',
+      });
+      res.end(JSON.stringify({ message: 'INCORRECT_PASSWORD' }));
     } else {
       const data = JSON.parse(results.data);
       // console.log(`Id: ${data._id}`);
@@ -31,7 +39,7 @@ router.post('/', async (request, response) => {
         expiresIn: 1008000,
       });
       const jwtToken = `JWT ${token}`;
-      response.status(200).send({
+      res.status(200).send({
         name: data.name,
         email: data.email,
         phone: data.phone,

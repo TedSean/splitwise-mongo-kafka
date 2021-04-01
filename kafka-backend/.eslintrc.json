@@ -12,6 +12,7 @@
         "ecmaVersion": 12
     },
     "rules": {
-        "no-param-reassign":"off"
+        "no-param-reassign":"off",
+        "consistent-return": "off"
     }
 }

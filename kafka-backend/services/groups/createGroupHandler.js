@@ -19,7 +19,7 @@ const createGroupHandler = async (msg, callback) => {
           // console.log(group._id);
           await user.invitations.push(group._id);
           await user.save();
-          console.log(user);
+          // console.log(user);
         });
       });
       res.data = JSON.stringify(group);

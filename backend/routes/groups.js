@@ -22,7 +22,7 @@ router.get('/', checkAuth, (req, res) => {
       res.writeHead(201, {
         'Content-Type': 'application/json',
       });
-      res.end({ message: 'SOMETHING_WENT_WRONG' });
+      res.end(JSON.stringify({ message: 'SOMETHING_WENT_WRONG' }));
       // return res.status(201).json({ errors: [{ message: 'System Error' }] });
     } else {
       res.writeHead(200, {
