@@ -2,6 +2,8 @@
 
 Splitwise Clone using Mongo, Express, React and Node.
 
+## Backend
+
 - [x] Kafka  
 - [x] Passport and JWT backend  
 - [x] User Signup  
@@ -9,7 +11,7 @@ Splitwise Clone using Mongo, Express, React and Node.
 - [x] Profile Get  
 - [x] Profile Update  
 - [x] User Image Upload  
-- [ ] Group Create  
+- [x] Group Create  
 - [ ] Group Image Upload  
 - [ ] Group List  
 - [ ] Group Invite  
@@ -19,3 +21,23 @@ Splitwise Clone using Mongo, Express, React and Node.
 - [ ] Create Bill  
 - [ ] Settle Up  
 - [ ] Recent Activity  
+
+## Frontend
+
+- [x] Startup
+- [x] Redux Setup
+- [x] Landing Page
+- [x] NavBar
+- [x] Login
+- [x] SignUp
+- [x] Profile
+- [ ] Create Group
+- [ ] Groups
+- [ ] Group Invitations
+- [ ] Group Memberships
+- [ ] Group Details
+- [ ] Add Expense Modal
+- [ ] Settle Up Modal
+- [ ] Recent Activity
+- [ ] Left Sidebar
+- [ ] Right Sidebar
