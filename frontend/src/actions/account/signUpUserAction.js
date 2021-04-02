@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { USER_SIGNUP } from '../constant-types';
-import apiHost from '../../config';
+import apiHost from '../../apiHost';
 
 const userSignUp = (userInfo) => (dispatch) => {
   axios.defaults.withCredentials = true;
@@ -9,15 +9,10 @@ const userSignUp = (userInfo) => (dispatch) => {
       type: USER_SIGNUP,
       payload: response.data,
     }))
-    .catch((error) => {
-      if (error.response && error.response.data) {
-        console.log(error.response);
-        return dispatch({
-          type: USER_SIGNUP,
-          payload: error.response.data,
-        });
-      }
-    });
+    .catch((error) => dispatch({
+      type: USER_SIGNUP,
+      payload: error.response.data,
+    }));
 };
 
 export default userSignUp;

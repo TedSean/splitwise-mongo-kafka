@@ -2,8 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const AWS = require('aws-sdk');
-const path = require('path');
-const fs = require('fs');
+const jwtDecode = require('jwt-decode');
 const config = require('../utils/config');
 const kafka = require('../kafka/client');
 const { checkAuth } = require('../utils/passport');
@@ -24,11 +23,11 @@ const userImageUpload = multer({
     key: (req, file, cb) => {
       cb(
         null,
-        `userImages/${req.body.email}_${Date.now()}${file.originalname}`,
+        `userImages/${jwtDecode(req.headers.authorization).id}_${Date.now()}${file.originalname}`,
       );
     },
   }),
-}).single('avatar');
+}).single('image');
 
 const groupImageUpload = multer({
   storage: multerS3({
@@ -43,20 +42,8 @@ const groupImageUpload = multer({
   }),
 }).single('groupImage');
 
-router.get('/:userImage', (req, res) => {
-  console.log('Inside user image GET request');
-  // console.log('Req Body : ', req.body);
-  const image = `${path.join(__dirname, '..')}/public/storage/users/${req.params.userImage}`;
-
-  if (fs.existsSync(image)) {
-    res.sendFile(image);
-  } else {
-    res.sendFile(`${path.join(__dirname, '..')}/public/storage/users/userPlaceholder.png`);
-  }
-});
-
 router.put(
-  '/user/:userId',
+  '/user',
   checkAuth,
   userImageUpload,
   (req, res) => {
@@ -64,6 +51,9 @@ router.put(
     if (req.file) {
       req.body.fileUrl = req.file.location;
     }
+    const token = req.headers.authorization;
+    const decoded = jwtDecode(token);
+    req.body.userId = decoded.id;
 
     kafka.makeRequest('images', req.body, (err, results) => {
       if (err) {

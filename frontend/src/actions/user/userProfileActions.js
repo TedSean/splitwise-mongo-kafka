@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { GET_USER, UPDATE_USER } from '../constant-types';
-import apiHost from '../../config';
+import apiHost from '../../apiHost';
 
-export const getUser = () => (dispatch) => {
+const getUser = () => (dispatch) => {
   axios.get(`${apiHost}/api/profile`, {
     headers: {
       authorization: localStorage.getItem('idToken'),
@@ -22,24 +22,16 @@ export const getUser = () => (dispatch) => {
     });
 };
 
-export const updateUser = (userProfileInfo) => (dispatch) => {
+const updateUser = (userProfileInfo) => (dispatch) => {
+  console.log(userProfileInfo);
   axios.defaults.withCredentials = true;
-  axios.post(`${apiHost}/api/profile/user`, userProfileInfo, {
-    headers: {
-      authorization: localStorage.getItem('idToken'),
-    },
-  })
+  axios.defaults.headers.common.authorization = localStorage.getItem('idToken');
+  axios.put(`${apiHost}/api/profile`, userProfileInfo)
     .then((response) => response.data)
-    .then((data) => {
-      if (data === 'USER_UPDATED') {
-        localStorage.setItem('user_id', userProfileInfo.user_id);
-        // alert('User Profile Updated Successfully!');
-      }
-      return dispatch({
-        type: UPDATE_USER,
-        payload: data,
-      });
-    })
+    .then((user) => dispatch({
+      type: UPDATE_USER,
+      payload: user,
+    }))
     .catch((error) => {
       console.log(error);
       return dispatch({
@@ -48,3 +40,5 @@ export const updateUser = (userProfileInfo) => (dispatch) => {
       });
     });
 };
+
+export { getUser, updateUser };

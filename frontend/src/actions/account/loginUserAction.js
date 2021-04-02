@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { USER_LOGIN, USER_LOGOUT } from '../constant-types';
-import apiHost from '../../config';
+import apiHost from '../../apiHost';
 
 export const userLogin = (loginInfo) => (dispatch) => {
   axios.defaults.withCredentials = true;

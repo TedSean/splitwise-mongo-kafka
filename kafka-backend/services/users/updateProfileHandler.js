@@ -21,8 +21,18 @@ const updateProfileHandler = async (msg, callback) => {
         new: true,
         useFindAndModify: true,
       });
+      res.data = {
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        language: updatedUser.language,
+        currency: updatedUser.currency,
+        timezone: updatedUser.timezone,
+        image: updatedUser.image,
+        _id: updatedUser._id,
+      };
       res.status = 200;
-      res.data = JSON.stringify(updatedUser);
+      // res.data = JSON.stringify(updatedUser);
       callback(null, res);
     }
   } catch (e) {

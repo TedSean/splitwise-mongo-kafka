@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
@@ -8,8 +9,9 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import NavBar from '../landing/NavBar';
-import apiHost from '../../config';
-import { getUser } from '../../actions/user/userProfileActions';
+import apiHost from '../../apiHost';
+import { getUser, updateUser } from '../../actions/user/userProfileActions';
+// import imageUrl from '../../config';
 
 class Profile extends Component {
   constructor(props) {
@@ -17,24 +19,21 @@ class Profile extends Component {
     this.state = {
       validated: false,
     };
-  }
-
-  UNSAFE_componentWillMount() {
     this.props.getUser();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    // console.log(nextProps);
-    if (nextProps.user) {
+    if (nextProps) {
       const { user } = nextProps;
-      // console.log(user);
       const userData = {
-        name: user.name,
-        email: user.email,
-        language: user.language,
-        currency: user.currency,
-        timezone: user.timezone,
-        image: user.image,
+        name: user.name || this.state.name,
+        email: user.email || this.state.email,
+        phone: user.phone || this.state.phone,
+        language: user.language || this.state.language,
+        currency: user.currency || this.state.currency,
+        timezone: user.timezone || this.state.timezone,
+        image: user.image || this.state.image,
+        message: user.message || this.state.message,
       };
       this.setState(userData);
     }
@@ -74,22 +73,24 @@ class Profile extends Component {
       formData.append('image', this.state.file);
       const uploadConfig = {
         headers: {
+          authorization: localStorage.getItem('idToken'),
           'content-type': 'multipart/form-data',
         },
       };
-      axios.post(`${apiHost}/api/upload/${localStorage.getItem('user_id')}`, formData, uploadConfig)
+      axios.put(`${apiHost}/api/images/user`, formData, uploadConfig)
         .then((response) => {
           // alert('Image uploaded successfully!');
+          console.log(response);
           this.setState({
             filename: 'Choose your avatar',
-            image: response.data.message,
+            image: response.data,
           });
         })
         .catch((err) => {
           if (err.response && err.response.data) {
             this.setState({
               message: err.response.data,
-            });
+            }, () => console.log(this.state.message));
           }
         });
     }
@@ -106,35 +107,23 @@ class Profile extends Component {
     } else {
       e.preventDefault();
       const data = { ...this.state };
-      // console.log(JSON.stringify(data));
-      axios.put(`${apiHost}/api/profile`, data)
-        .then((response) => {
-          this.setState({
-            message: response.data.message,
-            // validated: true,
-          });
-        })
-        .catch((err) => {
-          if (err.response && err.response.data) {
-            this.setState({
-              message: err.response.data,
-            });
-          }
-        });
+      this.props.updateUser(data);
     }
   }
 
   render() {
-    // console.log(this.state.message);
     let redirectVar = null;
-    if (this.state.message === 'USER_UPDATED') {
-      localStorage.setItem('name', this.state.name);
+    if (this.state.message === 'PROFILE_UPDATE_SUCCESS') {
+      localStorage.setItem('name', this.props.user.name);
       redirectVar = <Redirect to="/home" />;
     }
     let image = null;
     const filename = this.state.filename || 'Choose your Avatar';
-    if (this.state) {
-      image = `${apiHost}/api/images/${this.state.image}`;
+    console.log(this.state);
+    if (this.state.image) {
+      // image = `${imageUrl.imageUrl}/${this.state.image}`;
+      image = this.state.image;
+      console.log(image);
     }
     return (
       <div>
@@ -180,10 +169,13 @@ class Profile extends Component {
               </Form>
             </Col>
             <Col md={{ offset: 1 }} className="mt-5 pt-5">
+              {/* <ProfileForm
+                user={this.props.user}
+                updateUser={this.props.updateUser}
+              /> */}
               <Form noValidate validated={this.state.validated} onSubmit={this.onSave}>
                 <Form.Row>
                   <Form.Group as={Col} md="4">
-                    {/* Name */}
                     <Form.Label>Your Name</Form.Label>
                     <Form.Control
                       name="name"
@@ -198,7 +190,6 @@ class Profile extends Component {
                   </Form.Group>
                   &nbsp;&nbsp;&nbsp;
                   <Form.Group as={Col} md="4">
-                    {/* Currency */}
                     <Form.Label>Your Default Currency</Form.Label>
                     <Form.Control
                       name="currency"
@@ -220,7 +211,6 @@ class Profile extends Component {
                 </Form.Row>
                 <Form.Row>
                   <Form.Group as={Col} md="4">
-                    {/* Email */}
                     <Form.Label>Your Email Address</Form.Label>
                     <Form.Control
                       name="email"
@@ -235,7 +225,6 @@ class Profile extends Component {
                   </Form.Group>
                   &nbsp;&nbsp;&nbsp;
                   <Form.Group as={Col} md="4">
-                    {/* Timezone */}
                     <Form.Label>Your Time Zone</Form.Label>
                     <Form.Control
                       name="timezone"
@@ -333,7 +322,6 @@ class Profile extends Component {
                 </Form.Row>
                 <Form.Row>
                   <Form.Group as={Col} md="4">
-                    {/* Phone */}
                     <Form.Label>Your Phone Number</Form.Label>
                     <Form.Control
                       name="phone"
@@ -348,7 +336,6 @@ class Profile extends Component {
                   </Form.Group>
                   &nbsp;&nbsp;&nbsp;
                   <Form.Group as={Col} md="4">
-                    {/* Language */}
                     <Form.Label>Language</Form.Label>
                     <Form.Control
                       name="language"
@@ -376,7 +363,6 @@ class Profile extends Component {
                 </Form.Row>
                 <Form.Row>
                   <Form.Group as={Col} md={{ span: 4, offset: 7 }}>
-                    {/* Save Button */}
                     <Button variant="info" type="submit" style={{ width: '4.5rem' }}>Save</Button>
                   </Form.Group>
                 </Form.Row>
@@ -391,11 +377,12 @@ class Profile extends Component {
 
 Profile.propTypes = {
   getUser: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  updateUser: PropTypes.func.isRequired,
+  // user: PropTypes.object.isRequired,
 };
 
 const mapState = (state) => ({
   user: state.userProfile.user,
 });
 
-export default connect(mapState, { getUser })(Profile);
+export default connect(mapState, { getUser, updateUser })(Profile);

@@ -4,7 +4,7 @@ const userUpdateImageHandler = async (msg, callback) => {
   const res = {};
   try {
     // console.log(`msg UserId : ${msg.UserId}`);
-    const user = await User.findOne({ email: msg.email });
+    const user = await User.findById(msg.userId);
     if (!user) {
       res.status = 404;
       callback(null, res);

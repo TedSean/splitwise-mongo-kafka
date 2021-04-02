@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const bcrypt = require('bcrypt');
 const User = require('../../db/models/UserModel');
 
@@ -17,6 +16,7 @@ const signUpHandler = async (msg, callback) => {
       res.data = {
         name: user.name,
         email: user.email,
+        phone: user.phone,
         language: user.language,
         currency: user.currency,
         timezone: user.timezone,

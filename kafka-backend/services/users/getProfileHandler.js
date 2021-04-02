@@ -10,8 +10,19 @@ const getProfileHandler = async (msg, callback) => {
       res.status = 404;
       callback(null, res);
     } else {
+      res.data = {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        language: user.language,
+        currency: user.currency,
+        timezone: user.timezone,
+        image: user.image,
+        _id: user._id,
+      };
       res.status = 200;
-      res.data = JSON.stringify(user);
+      res.status = 200;
+      // res.data = JSON.stringify(user);
       callback(null, res);
     }
   } catch (e) {

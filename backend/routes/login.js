@@ -29,26 +29,40 @@ router.post('/', async (req, res) => {
       });
       res.end(JSON.stringify({ message: 'INCORRECT_PASSWORD' }));
     } else {
-      const data = JSON.parse(results.data);
+      // const data = JSON.parse(results.data);
       // console.log(`Id: ${data._id}`);
       const token = jwt.sign({
-        id: data._id,
+        id: results.data._id,
       },
       config.secret,
       {
         expiresIn: 1008000,
       });
       const jwtToken = `JWT ${token}`;
-      res.status(200).send({
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        language: data.language,
-        currency: data.currency,
-        timezone: data.timezone,
-        image: data.image,
-        idToken: jwtToken,
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
       });
+      res.end(JSON.stringify({
+        name: results.data.name,
+        email: results.data.email,
+        phone: results.data.phone,
+        language: results.data.language,
+        currency: results.data.currency,
+        timezone: results.data.timezone,
+        image: results.data.image,
+        message: 'NEW_USER_CREATED',
+        idToken: jwtToken,
+      }));
+      // res.status(200).send({
+      //   name: data.name,
+      //   email: data.email,
+      //   phone: data.phone,
+      //   language: data.language,
+      //   currency: data.currency,
+      //   timezone: data.timezone,
+      //   image: data.image,
+      //   idToken: jwtToken,
+      // });
     }
   });
 });

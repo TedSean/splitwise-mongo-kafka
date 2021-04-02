@@ -28,8 +28,18 @@ const loginHandler = async (msg, callback) => {
             console.log('in match error');
             callback(null, { status: 403, res: 'INCORRECT_PASSWORD' });
           }
+          res.data = {
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            language: user.language,
+            currency: user.currency,
+            timezone: user.timezone,
+            image: user.image,
+            _id: user._id,
+          };
           res.status = 200;
-          res.data = JSON.stringify(user);
+          // res.data = JSON.stringify(user);
           callback(null, res);
         });
       }
