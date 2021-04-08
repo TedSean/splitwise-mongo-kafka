@@ -1,4 +1,4 @@
-import { USER_SIGNUP } from '../actions/constant-types';
+import { USER_SIGNUP } from '../../actions/constant-types';
 
 const initState = {
   user: {},

@@ -5,6 +5,7 @@ import Login from './account/Login';
 import SignUp from './account/SignUp';
 import Profile from './user/Profile';
 import Home from './home/Home';
+import NewGroup from './groups/NewGroup';
 
 function Main() {
   return (
@@ -14,6 +15,7 @@ function Main() {
       <Route path="/signup" exact component={SignUp} />
       <Route path="/home" component={Home} />
       <Route path="/profile" component={Profile} />
+      <Route path="/newgroup" component={NewGroup} />
     </div>
   );
 }

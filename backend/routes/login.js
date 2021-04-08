@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
         currency: results.data.currency,
         timezone: results.data.timezone,
         image: results.data.image,
-        message: 'NEW_USER_CREATED',
+        message: 'USER_LOGGED_IN',
         idToken: jwtToken,
       }));
       // res.status(200).send({

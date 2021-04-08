@@ -15,20 +15,15 @@ const createGroupHandler = async (msg, callback) => {
       await group.save();
       await msg.invitedMembers.map((invitedMemberEmail) => {
         User.findOne({ email: invitedMemberEmail }, async (err, user) => {
-          // console.log(user);
-          // console.log(group._id);
           await user.invitations.push(group._id);
           await user.save();
-          // console.log(user);
         });
       });
       res.data = JSON.stringify(group);
       res.status = 201;
       callback(null, res);
     } catch (e) {
-      // console.log(e);
       res.status = 404;
-      // console.log('Kafka Backend : SignUp failed');
       callback(null, e);
     }
   }

@@ -34,6 +34,33 @@ router.get('/', checkAuth, (req, res) => {
   });
 });
 
+router.get('/users', checkAuth, (req, res) => {
+  req.body.path = 'get-all-users';
+
+  const decodedToken = jwtDecode(req.headers.authorization);
+  req.body.userId = decodedToken.id;
+
+  kafka.makeRequest('groups', req.body, (err, results) => {
+    if (err) {
+      // console.log('Inside err');
+      res.writeHead(500, {
+        'Content-Type': 'application/json',
+      });
+      res.end({ message: err });
+    } else if (results.status === 404) {
+      res.writeHead(201, {
+        'Content-Type': 'application/json',
+      });
+      res.end(JSON.stringify({ message: 'NO_USERS' }));
+    } else {
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+      });
+      res.end(JSON.stringify({ users: results.data }));
+    }
+  });
+});
+
 router.get('/:groupName', checkAuth, (req, res) => {
   req.body.path = 'get-group-details';
   req.body.params = req.params.groupName;
@@ -50,13 +77,11 @@ router.get('/:groupName', checkAuth, (req, res) => {
         'Content-Type': 'application/json',
       });
       res.end({ message: 'SOMETHING_WENT_WRONG' });
-      // return res.status(201).json({ errors: [{ message: 'System Error' }] });
     } else {
       res.writeHead(200, {
         'Content-Type': 'application/json',
       });
       res.end(results.data);
-      // res.status(200).send(JSON.parse(results.data));
     }
   });
 });
@@ -77,12 +102,12 @@ router.post('/', checkAuth, (req, res) => {
       res.writeHead(results.status, {
         'Content-Type': 'application/json',
       });
-      res.end(JSON.stringify({ message: 'GROUP_ALREADY_EXISTS' }));
+      res.end(JSON.stringify({ message: 'DUPLICATE_GROUP' }));
     } else {
       res.writeHead(200, {
         'Content-Type': 'application/json',
       });
-      res.end(results.data);
+      res.end(JSON.stringify({ message: 'GROUP_CREATED' }));
     }
   });
 });

@@ -15,7 +15,7 @@ function handleTopicRequest(topicName, fname) {
   const producer = connection.getProducer();
   console.log(`server is running for ${topicName} topic`);
   consumer.on('message', (message) => {
-    console.log(`message received for ${topicName} `, fname);
+    console.log(`message received for ${JSON.stringify(topicName)} `, fname);
     console.log(JSON.stringify(message.value));
     const data = JSON.parse(message.value);
 

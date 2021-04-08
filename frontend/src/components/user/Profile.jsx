@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 import {
   Row, Col, Form, Button, Image,
 } from 'react-bootstrap';
-import axios from 'axios';
+// import axios from 'axios';
 import NavBar from '../landing/NavBar';
-import apiHost from '../../apiHost';
-import { getUser, updateUser } from '../../actions/user/userProfileActions';
+// import apiHost from '../../apiHost';
+import { getUser, updateUser, updateUserImage } from '../../actions/user/userProfileActions';
 // import imageUrl from '../../config';
 
 class Profile extends Component {
@@ -69,30 +69,8 @@ class Profile extends Component {
       });
     } else {
       e.preventDefault();
-      const formData = new FormData();
-      formData.append('image', this.state.file);
-      const uploadConfig = {
-        headers: {
-          authorization: localStorage.getItem('idToken'),
-          'content-type': 'multipart/form-data',
-        },
-      };
-      axios.put(`${apiHost}/api/images/user`, formData, uploadConfig)
-        .then((response) => {
-          // alert('Image uploaded successfully!');
-          console.log(response);
-          this.setState({
-            filename: 'Choose your avatar',
-            image: response.data,
-          });
-        })
-        .catch((err) => {
-          if (err.response && err.response.data) {
-            this.setState({
-              message: err.response.data,
-            }, () => console.log(this.state.message));
-          }
-        });
+      const data = this.state.file;
+      this.props.updateUserImage(data);
     }
   }
 
@@ -118,12 +96,12 @@ class Profile extends Component {
       redirectVar = <Redirect to="/home" />;
     }
     let image = null;
-    const filename = this.state.filename || 'Choose your Avatar';
-    console.log(this.state);
+    let filename = this.state.filename || 'Choose your Avatar';
+    if (this.props.user.message === 'PROFILE_UPDATE_IMAGE_SUCCESS') {
+      filename = 'Choose your Avatar';
+    }
     if (this.state.image) {
-      // image = `${imageUrl.imageUrl}/${this.state.image}`;
       image = this.state.image;
-      console.log(image);
     }
     return (
       <div>
@@ -169,10 +147,6 @@ class Profile extends Component {
               </Form>
             </Col>
             <Col md={{ offset: 1 }} className="mt-5 pt-5">
-              {/* <ProfileForm
-                user={this.props.user}
-                updateUser={this.props.updateUser}
-              /> */}
               <Form noValidate validated={this.state.validated} onSubmit={this.onSave}>
                 <Form.Row>
                   <Form.Group as={Col} md="4">
@@ -378,11 +352,11 @@ class Profile extends Component {
 Profile.propTypes = {
   getUser: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
-  // user: PropTypes.object.isRequired,
+  updateUserImage: PropTypes.func.isRequired,
 };
 
 const mapState = (state) => ({
   user: state.userProfile.user,
 });
 
-export default connect(mapState, { getUser, updateUser })(Profile);
+export default connect(mapState, { getUser, updateUser, updateUserImage })(Profile);
