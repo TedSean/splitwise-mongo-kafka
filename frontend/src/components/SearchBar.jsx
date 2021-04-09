@@ -23,6 +23,7 @@ class SearchBar extends Component {
   }
 
   render() {
+    console.log(this.props);
     const searchList = this.props.names.map((name) => ({
       value: name,
       label: name,

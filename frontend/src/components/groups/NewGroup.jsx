@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   Row, Col, Form, Button, Image, Alert,
 } from 'react-bootstrap';
+import { Redirect } from 'react-router';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -20,6 +21,7 @@ class NewGroup extends Component {
       imageFormValidated: false,
       saveFormValidated: false,
       invitedMembers: [],
+      message: '',
     };
     // this.getAllNames();
     this.props.getAllUsers();
@@ -46,6 +48,9 @@ class NewGroup extends Component {
         invitedMembers: this.state.invitedMembers,
       };
       this.props.createGroup(data);
+      this.setState({
+        message: this.props.message,
+      });
     }
   }
 
@@ -90,7 +95,7 @@ class NewGroup extends Component {
   }
 
   onCancel = () => {
-    // console.log(emaxil);
+    // console.log(email);
     this.setState((prevState) => ({ invitationListSize: prevState.invitationListSize - 1 }));
   }
 
@@ -107,24 +112,17 @@ class NewGroup extends Component {
   }
 
   render() {
-    // console.log(this.props.users);
+    let redirectVar = null;
+    console.log(this.state.message);
+    if (this.state.message === 'GROUP_CREATED') {
+      redirectVar = <Redirect to="/home" />;
+    }
     let selfMember = null;
     const invitationForms = [];
     let errorMessage = null;
 
     if (this.state.message === 'DUPLICATE_GROUP') {
       errorMessage = <Alert variant="danger">Group Name Taken. Please enter unique group name.</Alert>;
-    }
-    if (this.state.message === 'GROUP_CREATED') {
-      errorMessage = (
-        <Alert variant="success">
-          Group
-          &nbsp;
-          {this.state.groupName}
-          &nbsp;
-          created.
-        </Alert>
-      );
     }
     selfMember = (
       <Form.Row>
@@ -160,6 +158,7 @@ class NewGroup extends Component {
 
     return (
       <div>
+        {redirectVar}
         <NavBar />
         <div className="mt-5">
           <Row>
@@ -196,10 +195,12 @@ class NewGroup extends Component {
             </Col>
             <Col md={{ span: 6 }}>
               <h5 className="text-muted">START A NEW GROUP</h5>
-              <div as={Col} md="4">{errorMessage}</div>
+              <div as={Col} md={{ span: 2 }}>
+                {errorMessage}
+              </div>
               <Form noValidate validated={this.state.saveFormValidated}>
                 <Form.Row>
-                  <Form.Group as={Col} md="4">
+                  <Form.Group as={Col} md={4}>
                     <Form.Control
                       type="text"
                       name="groupName"
@@ -211,9 +212,9 @@ class NewGroup extends Component {
                       Please enter a group name.
                     </Form.Control.Feedback>
                   </Form.Group>
-                  <Form.Group as={Col} md="3">
+                  {/* <Form.Group as={Col} md="3">
                     <Button type="submit">Create</Button>
-                  </Form.Group>
+                  </Form.Group> */}
                 </Form.Row>
               </Form>
               <Divider />
@@ -245,7 +246,7 @@ class NewGroup extends Component {
 
 const mapState = (state) => ({
   users: state.getAllUsersReducer.users,
-  group: state.createGroupReducer.group,
+  message: state.createGroupReducer.message,
 });
 
 export default connect(mapState, { getAllUsers, createGroup })(NewGroup);

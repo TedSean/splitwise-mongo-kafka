@@ -1,7 +1,7 @@
 import { CREATE_GROUP } from '../../actions/constant-types';
 
 const initState = {
-  group: {},
+  message: null,
 };
 
 const createGroupReducer = (state = initState, action) => {
@@ -9,7 +9,7 @@ const createGroupReducer = (state = initState, action) => {
     case CREATE_GROUP:
       return {
         ...state,
-        group: action.payload,
+        message: action.payload,
       };
     default:
       return state;
