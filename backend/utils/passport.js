@@ -19,7 +19,7 @@ function auth() {
       // console.log(`jwtPayload: ${JSON.stringify(jwtPayload)}`);
       // console.log(`jwtPayload id: ${jwtPayload._id}`);
       const msg = {};
-      msg.userId = jwtPayload._id;
+      msg.userId = jwtPayload.id;
       // console.log('msg in backend: ');
       // console.log(msg);
       kafka.makeRequest('passport', msg, (err, results) => {

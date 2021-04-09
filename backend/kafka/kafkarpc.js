@@ -22,7 +22,7 @@ KafkaRPC.prototype.makeRequest = function (topicName, content, callback) {
     // if this ever gets called we didn't get a response in a
     // timely fashion
     console.log('timeout');
-    callback(new Error(`timeout ${corrId}`));
+    callback(new Error(`timeout ${corrId} topicName ${topicName} content ${JSON.stringify(content)}`));
     // delete the entry from hash
     delete self.requests[corrId];
   }, TIMEOUT, correlationId);

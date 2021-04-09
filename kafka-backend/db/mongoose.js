@@ -5,6 +5,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(config.url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 }).then(() => {
   console.log('successfully connected to the database');
 }).catch((err) => {

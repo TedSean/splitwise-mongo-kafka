@@ -4,7 +4,7 @@ const passportHandler = async (msg, callback) => {
   const res = {};
   try {
     const { userId } = msg;
-    // console.log(`User Id : ${userId}`);
+    console.log(`User Id : ${userId}`);
     const user = await User.findById(userId);
     // console.log(`User: ${user}`);
     if (!user) {
