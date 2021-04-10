@@ -7,8 +7,9 @@ import Profile from './user/Profile';
 import Home from './home/Home';
 import NewGroup from './groups/NewGroup';
 import Groups from './groups/Groups';
+import GroupDetails from './groups/GroupDetails';
 
-function Main() {
+export default function Main() {
   return (
     <div>
       <Route path="/" exact component={LandingPage} />
@@ -18,8 +19,7 @@ function Main() {
       <Route path="/profile" component={Profile} />
       <Route path="/newgroup" component={NewGroup} />
       <Route path="/groups" component={Groups} />
+      <Route path="/groupdetails/:groupName" component={GroupDetails} />
     </div>
   );
 }
-
-export default Main;

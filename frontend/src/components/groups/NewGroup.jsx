@@ -150,11 +150,11 @@ class NewGroup extends Component {
       }
     }
 
-    let groupImage = null;
+    const groupImage = 'https://splitwise-imagestore.s3-us-west-2.amazonaws.com/groupImages/groupPlaceholder.png';
     const filename = this.state.filename || 'Choose Group Image';
-    if (this.state) {
-      groupImage = `${apiHost}/api/upload/group/${this.state.groupImage}`;
-    }
+    // if (this.state) {
+    //   groupImage = `${apiHost}/api/upload/group/${this.state.groupImage}`;
+    // }
 
     return (
       <div>

@@ -102,7 +102,7 @@ router.get('/users', checkAuth, (req, res) => {
 router.get('/:groupName', checkAuth, (req, res) => {
   req.body.path = 'get-group-details';
   req.body.params = req.params.groupName;
-
+  console.log(req.body.params);
   kafka.makeRequest('groups', req.body, (err, results) => {
     if (err) {
       // console.log('Inside err');

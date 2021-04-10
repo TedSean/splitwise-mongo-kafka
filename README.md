@@ -13,11 +13,11 @@ Splitwise Clone using Mongo, Express, React and Node.
 - [x] User Image Upload  
 - [x] Group Create  
 - [ ] Group Image Upload  
-- [ ] Group List  
-- [ ] Group Invite  
-- [ ] Group Reject  
+- [x] Group List  
+- [x] Group Invite  
+- [x] Group Reject  
 - [ ] Group Leave  
-- [ ] Group Display  
+- [x] Group Display  
 - [ ] Create Bill  
 - [ ] Settle Up  
 - [ ] Recent Activity  
@@ -31,10 +31,11 @@ Splitwise Clone using Mongo, Express, React and Node.
 - [x] Login
 - [x] SignUp
 - [x] Profile
-- [ ] Create Group
-- [ ] Groups
-- [ ] Group Invitations
-- [ ] Group Memberships
+- [x] Create Group
+- [ ] Group Image Upload
+- [x] Groups
+- [x] Group Invitations
+- [x] Group Memberships
 - [ ] Group Details
 - [ ] Add Expense Modal
 - [ ] Settle Up Modal

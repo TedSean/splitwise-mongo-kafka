@@ -1,108 +1,78 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import NavBar from '../landing/NavBar';
 import { userLogin } from '../../actions/account/loginUserAction';
 import SplitwiseImage from '../../images/logo.svg';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+export default function Login() {
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: '',
+  });
+  const user = useSelector((state) => state.login.user);
+  const dispatch = useDispatch();
 
-  handleEmailChange = (e) => {
-    this.setState({
-      email: e.target.value,
-    });
-  }
-
-  handlePasswordChange = (e) => {
-    this.setState({
-      password: e.target.value,
-    });
-  }
-
-  // submit Login handler to send a request to the node backend
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      email: this.state.email,
-      password: this.state.password,
-    };
+    dispatch(userLogin(inputs));
+  };
 
-    this.props.userLogin(data);
-
-    this.setState({
-      login: true,
-    });
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setInputs((input) => ({ ...input, [name]: value }));
+  };
+  let redirectVar = null;
+  let message = '';
+  if (user && user.idToken) {
+    localStorage.setItem('name', user.name);
+    localStorage.setItem('email', user.email);
+    localStorage.setItem('idToken', user.idToken);
+    redirectVar = <Redirect to="/home" />;
+  } else if (user.message === 'USER_DOES_NOT_EXIST') {
+    message = 'User Does Not Exists';
+  } else if (user.message === 'INCORRECT_PASSWORD') {
+    message = 'Incorrect Password';
   }
-
-  render() {
-    let redirectVar = null;
-    let message = '';
-    if (this.props.user && this.props.user.idToken) {
-      localStorage.setItem('name', this.props.user.name);
-      localStorage.setItem('email', this.props.user.email);
-      localStorage.setItem('idToken', this.props.user.idToken);
-      redirectVar = <Redirect to="/home" />;
-    } else if (this.props.user.message === 'USER_DOES_NOT_EXIST' && this.state.login) {
-      message = 'User Does Not Exists';
-    } else if (this.props.user.message === 'INCORRECT_PASSWORD' && this.state.login) {
-      message = 'Incorrect Password';
-    }
-    return (
+  return (
+    <div>
+      {redirectVar}
+      <NavBar />
       <div>
-        {redirectVar}
-        <NavBar />
-        <div>
-          <Row>
-            <Col xs md="1">{'\u00A0'}</Col>
-            <Col className="mt-5">
-              <img src={SplitwiseImage} className="img-fluid rounded float-right" style={{ height: 200, width: 200 }} alt="Splitwise" />
-            </Col>
-            <Col>
-              <div>
-                <div className="login-form">
-                  <div className="main-div">
-                    <div className="panel mt-4">
-                      <h2>WELCOME TO SPLITWISE</h2>
-                    </div>
-                    <br />
-                    <form onSubmit={this.handleSubmit}>
-                      <div style={{ color: '#ff0000' }}>{message}</div>
-                      <br />
-                      <div className="form-group">
-                        <input type="email" className="form-control" onChange={this.handleEmailChange} name="email" placeholder="Email Id" title="Enter valid email address" required />
-                      </div>
-                      <div className="form-group">
-                        <input type="password" className="form-control" onChange={this.handlePasswordChange} name="password" placeholder="Password" required />
-                      </div>
-                      <button type="submit" className="btn btn-orange btn-large btn-primary">Login</button>
-                      <br />
-                      <br />
-                    </form>
+        <Row>
+          <Col xs md="1">{'\u00A0'}</Col>
+          <Col className="mt-5">
+            <img src={SplitwiseImage} className="img-fluid rounded float-right" style={{ height: 200, width: 200 }} alt="Splitwise" />
+          </Col>
+          <Col>
+            <div>
+              <div className="login-form">
+                <div className="main-div">
+                  <div className="panel mt-4">
+                    <h2>WELCOME TO SPLITWISE</h2>
                   </div>
+                  <br />
+                  <form onSubmit={handleSubmit}>
+                    <div style={{ color: '#ff0000' }}>{message}</div>
+                    <br />
+                    <div className="form-group">
+                      <input type="email" className="form-control" onChange={onChange} name="email" placeholder="Email Id" title="Enter valid email address" required />
+                    </div>
+                    <div className="form-group">
+                      <input type="password" className="form-control" onChange={onChange} name="password" placeholder="Password" required />
+                    </div>
+                    <button type="submit" className="btn btn-orange btn-large btn-primary">Login</button>
+                    <br />
+                    <br />
+                  </form>
                 </div>
               </div>
-            </Col>
-            <Col xs lg="2">{'\u00A0'}</Col>
-          </Row>
-        </div>
+            </div>
+          </Col>
+          <Col xs lg="2">{'\u00A0'}</Col>
+        </Row>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-Login.propTypes = {
-  userLogin: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-};
-
-const mapState = (state) => ({
-  user: state.login.user,
-});
-
-export default connect(mapState, { userLogin })(Login);

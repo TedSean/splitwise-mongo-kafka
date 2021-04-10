@@ -109,9 +109,6 @@ class InvitationForm extends Component {
             </Form.Group>
             { this.state.showButtons && (
               <Form.Group className="d-flex m-0 p-0" fluid>
-                <Form.Group as={Col} md="auto m-0 p-0">
-                  <Button onClick={this.onInvite}>Invite</Button>
-                </Form.Group>
                 <Form.Group as={Col} md="auto ml-1 pl-1">
                   <Button variant="outline-danger" id="cancel" onClick={this.props.onCancel}>
                     <X />

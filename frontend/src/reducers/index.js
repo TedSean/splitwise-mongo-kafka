@@ -8,6 +8,7 @@ import getGroupInvitesReducer from './group/getGroupInvitesReducer';
 import getGroupMembershipsReducer from './group/getGroupMembershipsReducer';
 import acceptInviteReducer from './group/acceptInviteReducer';
 import rejectInviteReducer from './group/rejectInviteReducer';
+import getGroupDetailsReducer from './group/getGroupDetailsReducer';
 
 export default combineReducers({
   login: loginUserReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   getGroupMembershipsReducer,
   acceptInviteReducer,
   rejectInviteReducer,
+  getGroupDetailsReducer,
 });

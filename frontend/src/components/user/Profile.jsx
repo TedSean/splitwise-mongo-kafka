@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
@@ -7,11 +6,8 @@ import PropTypes from 'prop-types';
 import {
   Row, Col, Form, Button, Image,
 } from 'react-bootstrap';
-// import axios from 'axios';
 import NavBar from '../landing/NavBar';
-// import apiHost from '../../apiHost';
 import { getUser, updateUser, updateUserImage } from '../../actions/user/userProfileActions';
-// import imageUrl from '../../config';
 
 class Profile extends Component {
   constructor(props) {

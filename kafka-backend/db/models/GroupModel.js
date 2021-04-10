@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const billSchema = require('./BillModel.js').schema;
+const bill = require('./BillModel.js').schema;
 
 const groupsSchema = new Schema({
   groupName: {
@@ -11,11 +11,10 @@ const groupsSchema = new Schema({
   },
   groupImage: {
     type: String,
-    // required: true,
+    default: 'https://splitwise-imagestore.s3-us-west-2.amazonaws.com/groupImages/groupPlaceholder.png',
   },
-  owner: Schema.Types.ObjectId,
   members: [Schema.Types.ObjectId],
-  bills: [billSchema],
+  bills: [bill],
 },
 {
   versionKey: false,

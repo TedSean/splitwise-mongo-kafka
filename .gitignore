@@ -16,3 +16,5 @@ node_modules/
 .DS_Store
 config*
 kafka_commands
+*.mongodb
+.vscode

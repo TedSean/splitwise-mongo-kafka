@@ -28,7 +28,7 @@ class NavBar extends Component {
   render() {
     let navUser = null;
     let nameDropDown = null;
-
+    // let navLocation = null;
     nameDropDown = (
       <Dropdown>
         <Dropdown.Toggle variant="outline-success" id="dropdown-basic">
@@ -48,6 +48,7 @@ class NavBar extends Component {
     );
 
     if (localStorage.getItem('idToken')) {
+      // navLocation = '/home';
       navUser = (
         <div className="collapse navbar-collapse navbar-right" id="navbarNav">
           <Nav className="mr-auto" />
@@ -56,6 +57,7 @@ class NavBar extends Component {
         </div>
       );
     } else {
+      // navLocation = '/';
       navUser = (
         <div className="collapse navbar-collapse navbar-right" id="navbarNav">
           <Nav className="mr-auto" />

@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import NavBar from '../landing/NavBar';
 import GroupInvitation from './GroupInvitation';
 import GroupMembership from './GroupMembership';
-// import LeftSidebar from './LeftSidebar';
+import LeftSideBar from '../landing/LeftSideBar';
 import SearchBar from '../SearchBar';
 import { getGroupInvites, getGroupMemberships } from '../../actions/groups/getGroupsActions';
 
@@ -19,14 +19,12 @@ export default function Groups() {
   const groupInvites = useSelector((state) => state.getGroupInvitesReducer.groupInvites);
   const groupMemberships = useSelector((state) => state.getGroupMembershipsReducer.groupMemberships);
   const dispatch = useDispatch();
-  console.log(groupMemberships);
   useEffect(() => {
     dispatch(getGroupInvites());
     dispatch(getGroupMemberships());
   }, [dispatch]);
 
   const onUpdateInvitation = () => {
-    console.log('Inside Update Invitation');
     setUpdated(true);
   };
 
@@ -47,8 +45,7 @@ export default function Groups() {
       <div className="mt-5">
         <Row>
           <Col md={{ offset: 1, span: 2 }} className="flex-column">
-            {/* <LeftSidebar /> */}
-            &nbsp;
+            <LeftSideBar />
           </Col>
           <Col>
             <Row>

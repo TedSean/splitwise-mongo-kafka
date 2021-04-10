@@ -35,11 +35,11 @@ const usersSchema = new Schema({
   },
   image: {
     type: String,
-    default: 'userPlaceholder.png',
-    required: true,
+    default: 'https://splitwise-imagestore.s3-us-west-2.amazonaws.com/userImages/userPlaceholder.png',
   },
   invitations: [Schema.Types.ObjectId],
   memberships: [Schema.Types.ObjectId],
+  bills: [Schema.Types.ObjectId],
 },
 {
   versionKey: false,

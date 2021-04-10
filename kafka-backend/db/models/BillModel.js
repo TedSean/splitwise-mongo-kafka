@@ -12,21 +12,21 @@ const billSchema = new Schema({
     default: Date.now,
     required: true,
   },
-  price: {
+  billAmount: {
     type: Number,
     required: true,
   },
-  paid: {
-    type: Boolean,
-    default: false,
+  paidby: {
+    type: Schema.Types.ObjectId,
   },
-  paid_list: [{
-    user: mongoose.Schema.Types.ObjectId,
-    price: Number,
+  participants: [{
+    user: Schema.Types.ObjectId,
+    splitAmount: Number,
+    settled: false,
   }],
 },
 {
   versionKey: false,
 });
 
-module.exports = mongoose.model('Bill', billSchema);
+module.exports = mongoose.model('bill', billSchema);

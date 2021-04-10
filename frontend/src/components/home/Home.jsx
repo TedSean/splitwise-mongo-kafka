@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Redirect } from 'react-router';
 import NavBar from '../landing/NavBar';
 
-class Home extends Component {
-  render() {
-    return (
-      <div>
-        <NavBar />
-        <h1>
-          Welcome,
-          {localStorage.getItem('name')}
-        </h1>
-      </div>
-    );
+export default function Home() {
+  let redirectVar = null;
+  if (!localStorage.getItem('idToken')) {
+    redirectVar = <Redirect to="/" />;
   }
+  return (
+    <div>
+      {redirectVar}
+      <NavBar />
+      <h1>
+        Welcome,
+        {localStorage.getItem('name')}
+      </h1>
+    </div>
+  );
 }
-
-export default Home;
