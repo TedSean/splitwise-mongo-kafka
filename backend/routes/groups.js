@@ -102,24 +102,28 @@ router.get('/users', checkAuth, (req, res) => {
 router.get('/:groupName', checkAuth, (req, res) => {
   req.body.path = 'get-group-details';
   req.body.params = req.params.groupName;
-  console.log(req.body.params);
+  const decodedToken = jwtDecode(req.headers.authorization);
+  req.body.userId = decodedToken.id;
   kafka.makeRequest('groups', req.body, (err, results) => {
+    console.log(results);
     if (err) {
       // console.log('Inside err');
       res.writeHead(500, {
         'Content-Type': 'application/json',
       });
-      res.end({ message: err });
+      res.end(JSON.stringify({ message: err }));
     } else if (results.status === 404) {
       res.writeHead(201, {
         'Content-Type': 'application/json',
       });
-      res.end({ message: 'SOMETHING_WENT_WRONG' });
+      res.end(JSON.stringify({ message: 'SOMETHING_WENT_WRONG' }));
     } else {
       res.writeHead(200, {
         'Content-Type': 'application/json',
       });
-      res.end(results.data);
+      res.end(JSON.stringify({
+        groupDetails: results.data,
+      }));
     }
   });
 });

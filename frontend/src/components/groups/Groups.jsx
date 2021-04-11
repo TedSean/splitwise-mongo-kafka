@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import {
   Row, Col, Container,
@@ -17,7 +16,7 @@ export default function Groups() {
   const [updated, setUpdated] = useState(false);
   const [groupSearchName, setGroupSearchName] = useState('');
   const groupInvites = useSelector((state) => state.getGroupInvitesReducer.groupInvites);
-  const groupMemberships = useSelector((state) => state.getGroupMembershipsReducer.groupMemberships);
+  const groupMemberships = useSelector((st) => st.getGroupMembershipsReducer.groupMemberships);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getGroupInvites());
@@ -108,61 +107,3 @@ export default function Groups() {
     </div>
   );
 }
-
-// class GroupsClass extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       groupInvites: [],
-//       groupMemberships: [],
-//       groupSearchName: '',
-//     };
-//   }
-
-//   componentDidMount() {
-//     this.getGroups();
-//   }
-
-//   onUpdateInvitation = () => {
-//     this.setState({
-//       groupInvites: [],
-//       groupMemberships: [],
-//     });
-//     this.getGroups();
-//   }
-
-//   getGroups = async () => {
-//     await axios.get(`${apiHost}/api/getGroups/${localStorage.getItem('user_id')}`)
-//       .then((response) => {
-//         response.data.map((res) => {
-//           if (res.is_member === 'Y') {
-//             const list = [...this.state.groupMemberships, res];
-//             this.setState({
-//               groupMemberships: list,
-//             });
-//           } else if (res.is_member === 'N') {
-//             const list = [...this.state.groupInvites, res];
-//             this.setState({ groupInvites: list });
-//           }
-//         });
-//       }).catch((err) => {
-//         this.setState({
-//           message: err.response.data.message,
-//         });
-//       });
-//   }
-
-//   onSearchName = async (groupName) => {
-//     this.setState({
-//       groupSearchName: groupName,
-//     });
-//   }
-
-//   render() {
-//     console.log(`render groupsearch : ${JSON.stringify(this.state.groupSearch)}`);
-//     let errorMessage = null;
-//     if (this.state.message === 'NO_GROUPS') {
-//       errorMessage = <Alert variant="danger">You are not a part of any group. Create a New Group ! </Alert>;
-//     }
-
-// export default Groups;

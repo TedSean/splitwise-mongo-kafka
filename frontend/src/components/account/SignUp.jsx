@@ -74,7 +74,6 @@ class SignUp extends Component {
     // redirect based on successful signup
     let redirectVar = null;
     let message = '';
-    console.log(this.props);
     if (this.props.user.message === 'NEW_USER_CREATED' && this.state.signUp) {
       // alert('You have registered successfully');
       localStorage.setItem('name', this.props.user.name);

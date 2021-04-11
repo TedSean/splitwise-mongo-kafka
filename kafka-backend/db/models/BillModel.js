@@ -16,13 +16,22 @@ const billSchema = new Schema({
     type: Number,
     required: true,
   },
-  paidby: {
-    type: Schema.Types.ObjectId,
-  },
-  participants: [{
-    user: Schema.Types.ObjectId,
+  group: Schema.Types.ObjectId,
+  paidby: Schema.Types.ObjectId,
+  participants: {
+    users: [{
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    }],
     splitAmount: Number,
-    settled: false,
+    settled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  comments: [{
+    name: Schema.Types.ObjectId,
+    comment: String,
   }],
 },
 {

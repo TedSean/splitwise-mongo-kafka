@@ -1,10 +1,11 @@
+/* eslint-disable react/no-unused-state */
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import React, { Component } from 'react';
 import {
   Row, Col, Form, Button, Image, Alert,
 } from 'react-bootstrap';
 import { Redirect } from 'react-router';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Divider } from '@material-ui/core';
@@ -85,11 +86,11 @@ class NewGroup extends Component {
             filename: 'Choose your avatar',
             groupImage: response.data.message,
           });
-          console.log(this.state.groupImage);
+          // console.log(this.state.groupImage);
           // this.getUser();
         })
         .catch((err) => {
-          console.log(err.response);
+          // console.log(err.response);
         });
     }
   }
@@ -106,14 +107,14 @@ class NewGroup extends Component {
 
   addInvitedMembers = async (invitedMember) => {
     // console.log(invitedMember);
-    console.log(this.state.invitedMembers);
+    // console.log(this.state.invitedMembers);
     await this.setState((prevState) => ({ invitedMembers: [...prevState.invitedMembers, invitedMember] }));
-    console.log(this.state.invitedMembers);
+    // console.log(this.state.invitedMembers);
   }
 
   render() {
     let redirectVar = null;
-    console.log(this.state.message);
+    // console.log(this.state.message);
     if (this.state.message === 'GROUP_CREATED') {
       redirectVar = <Redirect to="/home" />;
     }

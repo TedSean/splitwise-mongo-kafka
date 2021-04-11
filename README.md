@@ -17,8 +17,8 @@ Splitwise Clone using Mongo, Express, React and Node.
 - [x] Group Invite  
 - [x] Group Reject  
 - [ ] Group Leave  
-- [x] Group Display  
-- [ ] Create Bill  
+- [x] Group Details  
+- [x] Create Bill  
 - [ ] Settle Up  
 - [ ] Recent Activity  
 
@@ -37,8 +37,10 @@ Splitwise Clone using Mongo, Express, React and Node.
 - [x] Group Invitations
 - [x] Group Memberships
 - [ ] Group Details
-- [ ] Add Expense Modal
+- [x] Add Expense Modal
 - [ ] Settle Up Modal
 - [ ] Recent Activity
 - [ ] Left Sidebar
 - [ ] Right Sidebar
+- [ ] **Comments on Bills**
+- [ ] **Pagination on Recent Activity**

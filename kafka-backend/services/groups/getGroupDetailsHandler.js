@@ -3,26 +3,40 @@ const Group = require('../../db/models/GroupModel');
 
 const getGroupDetailsHandler = (msg, callback) => {
   const res = {};
+  console.log(`MSG: ${JSON.stringify(msg)}`);
+  console.log(`MSG: ${JSON.stringify(msg.params)}`);
   User.findById(msg.userId)
     .then((user) => {
-      Group.findOne({ _id: { $in: user.invitations } })
-        .then((groups) => {
-          if (groups.length > 0) {
-            res.data = groups.map((group) => group.groupName);
+      console.log(user);
+      Group.findOne({ groupName: msg.params })
+        .populate({ path: 'members', select: 'name -_id image' })
+        .populate('bills')
+        .exec((err, group) => {
+          console.log('Here 1');
+          console.log(group);
+          if (group) {
+            console.log('Here 2');
+            res.data = {
+              groupName: group.groupName,
+              groupImage: group.groupImage,
+              members: group.members,
+              bills: group.bills,
+            };
+            console.log(`Members: ${group.members}`);
+            console.log(`Res: ${JSON.stringify(res)}`);
+            console.log('Here 3');
             res.status = 200;
+            console.log('Here 4');
             callback(null, res);
-          } else {
-            res.status = 404;
+          } else if (err) {
+            res.status = 201;
+            res.data = err;
             callback(null, res);
           }
-        })
-        .catch((e) => {
-          res.status = 404;
-          callback(null, e);
         });
     })
     .catch((e) => {
-      res.status = 404;
+      res.status = 500;
       callback(null, e);
     });
 };

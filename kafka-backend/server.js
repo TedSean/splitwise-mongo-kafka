@@ -7,6 +7,7 @@ const passport = require('./services/passport');
 const users = require('./services/users');
 const images = require('./services/images');
 const groups = require('./services/groups');
+const bills = require('./services/bills');
 
 require('./db/mongoose');
 
@@ -49,3 +50,4 @@ handleTopicRequest('passport', passport);
 handleTopicRequest('users', users);
 handleTopicRequest('images', images);
 handleTopicRequest('groups', groups);
+handleTopicRequest('bills', bills);

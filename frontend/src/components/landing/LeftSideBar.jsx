@@ -17,7 +17,7 @@ export default function LeftSideBar() {
   if (groupList && groupList.length > 0) {
     groupList.map((groupName) => {
       groupLinks.push(
-        <Link className="nav-link" to={`/groupdetails/${groupName}`}>
+        <Link key={groupName} className="nav-link" to={`/groupdetails/${groupName}`}>
           {groupName}
         </Link>,
       );

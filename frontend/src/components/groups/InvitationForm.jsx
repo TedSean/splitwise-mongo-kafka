@@ -1,9 +1,8 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable react/no-access-state-in-setstate */
-import axios from 'axios';
 import React, { Component } from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
 import { X } from 'react-bootstrap-icons';
-import apiHost from '../../config';
 import SearchBar from '../SearchBar';
 
 class InvitationForm extends Component {
@@ -29,46 +28,10 @@ class InvitationForm extends Component {
     return { names_email: [], names: [] };
   }
 
-  // onChangeInvitationName = (e) => {
-  //   this.setState({
-  //     invitationName: e.target.value,
-  //   });
-  // }
-
   onChangeInvitationEmail = (e) => {
     this.setState({
       invitationEmail: e.target.value,
     });
-  }
-
-  onInvite = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.setState({
-        validated: true,
-      });
-    } else {
-      e.preventDefault();
-      console.log(this.props.groupName);
-      const data = {
-        groupName: this.props.groupName,
-        invitationName: this.state.invitationName,
-        invitationEmail: this.state.invitationEmail,
-      };
-      console.log(`data: ${JSON.stringify(data)}`);
-      axios.post(`${apiHost}/api/inviteMember`, data)
-        .then((response) => {
-          console.log(response);
-          // alert('Invitation Sent');
-          this.setState({
-            showButtons: false,
-          });
-        }).catch((err) => {
-          console.log(err.response);
-        });
-    }
   }
 
   onSearchName = async (name) => {
@@ -81,7 +44,7 @@ class InvitationForm extends Component {
     // this.props.invitedMembers = [...this.props.invitedMembers, emailObj.email];
     // console.log(emailObj.email);
     await this.props.addInvitedMembers(emailObj.email);
-    await this.setState({
+    this.setState({
       email: emailObj.email,
       invitationName: name,
       invitationEmail: emailObj.email,

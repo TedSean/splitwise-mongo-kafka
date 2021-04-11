@@ -9,6 +9,7 @@ import getGroupMembershipsReducer from './group/getGroupMembershipsReducer';
 import acceptInviteReducer from './group/acceptInviteReducer';
 import rejectInviteReducer from './group/rejectInviteReducer';
 import getGroupDetailsReducer from './group/getGroupDetailsReducer';
+import addExpenseReducer from './bills/addExpenseReducer';
 
 export default combineReducers({
   login: loginUserReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   acceptInviteReducer,
   rejectInviteReducer,
   getGroupDetailsReducer,
+  addExpenseReducer,
 });

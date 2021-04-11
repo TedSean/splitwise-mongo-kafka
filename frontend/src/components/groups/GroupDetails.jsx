@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import {
   Row, Col, Button, ListGroup,
 } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import NavBar from '../landing/NavBar';
 import LeftSidebar from '../landing/LeftSideBar';
+import ExpenseModal from '../bills/ExpenseModal';
 import getGroupDetails from '../../actions/groups/groupDetailsActions';
 
 export default function GroupDetails() {
   const [showExpenseModal, setShowExpenseModal] = useState(false);
+  const groupDetails = useSelector((state) => state.getGroupDetailsReducer.groupDetails);
   const params = useParams();
   const dispatch = useDispatch();
-  console.log(showExpenseModal);
-
+  console.log(groupDetails);
   useEffect(() => {
     dispatch(getGroupDetails(params.groupName));
-  });
+  }, [dispatch, params.groupName]);
 
   return (
     <div>
@@ -33,12 +34,12 @@ export default function GroupDetails() {
                 {params.groupName}
               </h2>
               <Col style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                {/* <ExpenseModal
-                  show={this.state.showExpenseModal}
-                  handleClose={this.hideExpenseModal}
-                  group_name={this.state.group_name}
-                /> */}
-                <Button variant="success" onClick={() => setShowExpenseModal(false)}>Add an Expense</Button>
+                <ExpenseModal
+                  show={showExpenseModal}
+                  handleClose={() => setShowExpenseModal(false)}
+                  groupName={params.groupName}
+                />
+                <Button variant="success" onClick={() => setShowExpenseModal(true)}>Add an Expense</Button>
               </Col>
             </Row>
             &nbsp;
