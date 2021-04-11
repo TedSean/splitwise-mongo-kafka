@@ -7,7 +7,6 @@ import {
 } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { Divider } from '@material-ui/core';
 import NavBar from '../landing/NavBar';
 import apiHost from '../../config';
@@ -62,38 +61,38 @@ class NewGroup extends Component {
     });
   }
 
-  onUpload = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.setState({
-        imageFormValidated: true,
-      });
-    } else {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append('groupImage', this.state.file);
-      const uploadConfig = {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      };
-      axios.post(`${apiHost}/api/upload/group/${this.state.groupName}`, formData, uploadConfig)
-        .then((response) => {
-          // alert('Group Image uploaded successfully!');
-          this.setState({
-            filename: 'Choose your avatar',
-            groupImage: response.data.message,
-          });
-          // console.log(this.state.groupImage);
-          // this.getUser();
-        })
-        .catch((err) => {
-          // console.log(err.response);
-        });
-    }
-  }
+  // onUpload = (e) => {
+  //   const form = e.currentTarget;
+  //   if (form.checkValidity() === false) {
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //     this.setState({
+  //       imageFormValidated: true,
+  //     });
+  //   } else {
+  //     e.preventDefault();
+  //     const formData = new FormData();
+  //     formData.append('groupImage', this.state.file);
+  //     const uploadConfig = {
+  //       headers: {
+  //         'content-type': 'multipart/form-data',
+  //       },
+  //     };
+  //     axios.post(`${apiHost}/api/upload/group/${this.state.groupName}`, formData, uploadConfig)
+  //       .then((response) => {
+  //         // alert('Group Image uploaded successfully!');
+  //         this.setState({
+  //           filename: 'Choose your avatar',
+  //           groupImage: response.data.message,
+  //         });
+  //         // console.log(this.state.groupImage);
+  //         // this.getUser();
+  //       })
+  //       .catch((err) => {
+  //         // console.log(err.response);
+  //       });
+  //   }
+  // }
 
   onCancel = () => {
     // console.log(email);

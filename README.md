@@ -2,6 +2,8 @@
 
 Splitwise Clone using Mongo, Express, React and Node.
 
+![Node.js CI](https://github.com/mrugeshmaster/splitwise-mongo-kafka/actions/workflows/node.js.yml/badge.svg)
+
 ## Backend
 
 - [x] Kafka  
