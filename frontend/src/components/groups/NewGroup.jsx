@@ -9,7 +9,6 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { Divider } from '@material-ui/core';
 import NavBar from '../landing/NavBar';
-import apiHost from '../../config';
 import { getAllUsers, createGroup } from '../../actions/groups/createGroupActions';
 import InvitationForm from './InvitationForm';
 
@@ -60,39 +59,6 @@ class NewGroup extends Component {
       filename: e.target.files[0].name,
     });
   }
-
-  // onUpload = (e) => {
-  //   const form = e.currentTarget;
-  //   if (form.checkValidity() === false) {
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //     this.setState({
-  //       imageFormValidated: true,
-  //     });
-  //   } else {
-  //     e.preventDefault();
-  //     const formData = new FormData();
-  //     formData.append('groupImage', this.state.file);
-  //     const uploadConfig = {
-  //       headers: {
-  //         'content-type': 'multipart/form-data',
-  //       },
-  //     };
-  //     axios.post(`${apiHost}/api/upload/group/${this.state.groupName}`, formData, uploadConfig)
-  //       .then((response) => {
-  //         // alert('Group Image uploaded successfully!');
-  //         this.setState({
-  //           filename: 'Choose your avatar',
-  //           groupImage: response.data.message,
-  //         });
-  //         // console.log(this.state.groupImage);
-  //         // this.getUser();
-  //       })
-  //       .catch((err) => {
-  //         // console.log(err.response);
-  //       });
-  //   }
-  // }
 
   onCancel = () => {
     // console.log(email);
@@ -152,9 +118,6 @@ class NewGroup extends Component {
 
     const groupImage = 'https://splitwise-imagestore.s3-us-west-2.amazonaws.com/groupImages/groupPlaceholder.png';
     const filename = this.state.filename || 'Choose Group Image';
-    // if (this.state) {
-    //   groupImage = `${apiHost}/api/upload/group/${this.state.groupImage}`;
-    // }
 
     return (
       <div>
