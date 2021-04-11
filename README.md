@@ -3,7 +3,7 @@
 Splitwise Clone using Mongo, Express, React and Node.
 
 ![Node.js build CI](https://github.com/mrugeshmaster/splitwise-mongo-kafka/actions/workflows/node.js.yml/badge.svg)
-![commits](https://img.shields.io/github/commit-activity/m/mrugeshmaster/splitwise-mongo-kafka)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/y/mrugeshmaster/splitwise-mongo-kafka)
 
 ## Backend
 
